@@ -1,25 +1,27 @@
+from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.core.exceptions import (
-        ObjectDoesNotExist,
-        PermissionDenied,
-    )
-from scheducal.serializers import UserSerializer 
-from rest_framework import generics
+from django.utils import simplejson
+from django.core import serializers
+from django.views.decorators.http import require_http_methods
 
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+def user_dict(user):
+    groups = [group.pk for group in user.groups.all()]
+    return {
+        'id': user.pk,
+        'username': user.username,
+        'last_name': user.last_name,
+        'groups': groups or None,
+    }
     
-class UserDetail(generics.RetrieveAPIView):
+@require_http_methods(['GET'])
+def user_list(request):
+    users = User.objects.all()
+    data = [user_dict(user) for user in users]
+    data = simplejson.dumps(data)
+    return HttpResponse(data, mimetype='application/json')
 
-    serializer_class = UserSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-
-        # Checks to see if user is admin or checking 
-        # their own account
-        if int(user.pk) != int(self.kwargs['pk']):
-            if user.is_staff == False:
-                raise PermissionDenied
-        return User.objects.all()
+@require_http_methods(['GET'])
+def user_detail(request, pk):
+    user = User.objects.get(pk=pk)
+    data = simplejson.dumps(user_dict(user))
+    return HttpResponse(data, mimetype='application/json')

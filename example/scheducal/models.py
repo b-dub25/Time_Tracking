@@ -9,6 +9,13 @@ class Category(models.Model):
     name = models.CharField(max_length=20,unique=True)
     is_project = models.BooleanField()
 
+    def to_dict(self):
+        return {
+            'id': self.pk,
+            'name': self.name,
+            'is_project': self.is_project
+        }
+
     def __unicode__(self):
         return unicode(self.name)
 
