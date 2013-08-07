@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from rest_framework.authtoken.models import Token
+from pay_period.models import PayPeriod
 
 class Category(models.Model):
     name = models.CharField(max_length=20,unique=True)
@@ -41,6 +42,23 @@ class BaseEvent(models.Model):
 class WorkEvent(BaseEvent):
     category = models.ForeignKey(Category)
     on_campus = models.BooleanField()
+
+    @property
+    def pay_period(self):
+        return PayPeriod.objects.filter(start__lte=self.start_date) \
+                         .filter(end__gte=self.start_date)[0]
+
+    def to_dict(self):
+        return {
+            'user': self.user.id,
+            'start_time': unicode(self.start_time),
+            'end_time': unicode(self.end_time),
+            'start_date': unicode(self.start_date),
+            'comments': self.comments,
+            'duration': unicode(self.duration),
+            'category': self.category.id,
+            'on_campus': self.on_campus
+        }
     
 # To be used when adding schedule functionality
 class ScheduleEvent(BaseEvent):
