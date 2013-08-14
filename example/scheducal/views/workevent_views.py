@@ -19,6 +19,9 @@ from django.core import serializers
 
 @require_http_methods(['GET'])
 def work_event_list(request):
+    user = request.user
+    if not user:
+        return HttpResponse(status=403)
     work_events = WorkEvent.objects.all()
     data = [work_event.to_dict() for work_event in work_events]
     data = simplejson.dumps(data)
