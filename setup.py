@@ -25,14 +25,17 @@ def git_install_repos(repos, path):
             Repo.clone_from(repo['urls']['ssh'], repo_path) 
             call(['pip', 'install', '-r', repo_path + '/requirements.txt'])
         except:
-            errors.append('Error installing \n' + json.dumps(repo, indent=2))
+            errors.append(repo)
+    print('Errors installing:\n')
+    for error in errors:
+        print(json.dumps(error, indent=2))
     print('Done installing repos')
 
     
 if __name__ == '__main__':
     pwd = os.getcwd()
 
-# Install pip packages
+    # Install pip packages
     reqs = pwd + '/requirements.txt'
     if os.path.exists(reqs):
         if os.path.isfile(reqs):
@@ -42,13 +45,13 @@ if __name__ == '__main__':
     else:
         print(reqs + ' does not exist')
 
-# Install git repos
+    # Install git repos
     apps_dir = pwd + '/apps/'
     if not os.path.exists(apps_dir):
         os.makedirs(apps_dir)
 
-## List of git repos and options
-## Pass in name of repo, https and ssh urls, and if repo has requirements.txt
+    ## List of git repos and options
+    ## Pass in name of repo, https and ssh urls, and if repo has requirements.txt
     repos = [
         {
             'name': 'django-simple-token-auth', 
