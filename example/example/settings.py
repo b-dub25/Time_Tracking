@@ -113,6 +113,7 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'tokenauth.middleware.TokenAuth',
 )
 
 ROOT_URLCONF = 'example.urls'
@@ -140,11 +141,22 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'corsheaders',
     'pay_period',
+    'tokenauth',
+    'faculty_request',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'AUTHENTICATE'
+    )
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
