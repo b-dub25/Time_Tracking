@@ -23,7 +23,15 @@ def git_install_repos(repos, path):
         repo_path = path + repo['name']
         try:
             Repo.clone_from(repo['urls']['ssh'], repo_path) 
-            call(['pip', 'install', '-r', repo_path + '/requirements.txt'])
+            reqs = repo_path + '/requirements.txt' 
+            if os.path.exists(reqs):
+                if os.path.isfile(reqs):
+                    call(['pip', 'install', '-r', repo_path + '/requirements.txt'])
+                else:
+                    print(reqs + ' is a directory')
+            else:
+                print(reqs + ' does not exist')
+
         except:
             errors.append(repo)
     print('Errors installing:\n')
@@ -59,7 +67,6 @@ if __name__ == '__main__':
                 'https': 'https://github.com/jenterkin/django-simple-token-auth.git',
                 'ssh': 'git@github.com:jenterkin/django-simple-token-auth.git',
             },
-            'requirements': True
          },
     ]
     git_install_repos(repos, apps_dir)
