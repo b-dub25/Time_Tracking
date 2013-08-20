@@ -14,3 +14,10 @@ class PayPeriod(models.Model):
        today = datetime.datetime.utcnow().date()
        return PayPeriod.objects.get(start__lte=today,
                                     end__gte=today) 
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'start': unicode(self.start),
+            'end': unicode(self.end),
+        }

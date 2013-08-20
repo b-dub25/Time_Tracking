@@ -6,54 +6,43 @@ from django.core.exceptions import (
         PermissionDenied,
         ObjectDoesNotExist,
     )
-from rest_framework.response import Response
-from rest_framework import status
-from scheducal.models import WorkEvent, Category
-from pay_period.models import PayPeriod
-from scheducal.serializers import (
-        SaveWorkEventSerializer,
-        UserSerializer, 
-        CategorySerializer,
+from scheducal.models import (
+        WorkEvent, 
+        Category,
     )
-from rest_framework import generics
-from rest_framework.permissions import IsAdminUser
+from pay_period.models import PayPeriod
+from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+from django.utils import simplejson
+from django.core import serializers
 
-class WorkEventList(generics.ListCreateAPIView):
-    serializer_class = SaveWorkEventSerializer
+@require_http_methods(['GET'])
+def work_event_list(request):
+    user = request.user
+    if not user:
+        return HttpResponse(status=403)
+    work_events = WorkEvent.objects.all()
+    data = [work_event.to_dict() for work_event in work_events]
+    data = simplejson.dumps(data)
+    return HttpResponse(data, mimetype='application/json')
 
-    def get_queryset(self):
-        return WorkEvent.objects.filter(user=self.request.user.pk)
+@require_http_methods(['GET'])
+def work_event_list_for_pay_period(request, pay_period):
+    pay_period = PayPeriod.objects.get(pk=pay_period) 
+    if not pay_period:
+        raise ObjectDoesNotExist 
+    try:
+        events = WorkEvent.objects.filter(start_date__range=[pay_period.start, pay_period.end])
+    except:
+        raise PermissionDenied
 
-    def pre_save(self, obj):
-        obj.user = self.request.user
+    data = [event.to_dict() for event in events]
+    data = simplejson.dumps(data)
+    return HttpResponse(data, mimetype='application/json')
 
-class WorkEventListForPayPeriod(generics.ListCreateAPIView):
-    serializer_class = SaveWorkEventSerializer
-
-    def get_queryset(self):
-        pay_period = self.kwargs['pay_period']
-        pay_period = PayPeriod.objects.get(pk=pay_period) 
-        if not pay_period:
-            raise ObjectDoesNotExist 
-        try:
-            return WorkEvent.objects.filter(user=self.request.user, 
-                                            start_date__range=[pay_period.start, pay_period.end])
-        except:
-            raise PermissionDenied
-
-    def pre_save(self, obj):
-        obj.user = self.request.user
-
-class WorkEventDetail(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = SaveWorkEventSerializer
-
-    def get_queryset(self):
-        event = WorkEvent.objects.get(pk=self.kwargs['pk'])
-        user = self.request.user
-        if event.user != user:
-            if user.is_staff == False:
-                raise PermissionDenied
-        return WorkEvent.objects.all()
-
-    def pre_save(self, obj):
-        obj.user = self.request.user
+@require_http_methods(['GET'])
+def work_event_detail(request, pk):
+    event = WorkEvent.objects.get(pk=pk)
+    data = simplejson.dumps(event.to_dict())
+    return HttpResponse(data, mimetype='application/json') 

@@ -1,11 +1,25 @@
+from django.http import HttpResponse
 from pay_period.models import PayPeriod
-from pay_period.serializers import PayPeriodSerializer
-from rest_framework import generics
+from django.utils import simplejson
+from django.core import serializers
+from django.views.decorators.http import require_http_methods
 
-class PayPeriodList(generics.ListCreateAPIView):
-    queryset = PayPeriod.objects.all()
-    serializer_class = PayPeriodSerializer
+def list(request):
+    periods = [period.to_dict() for period in PayPeriod.objects.all()]
+    data = {'message': '', 'pay_periods': periods}
+    data = simplejson.dumps(data)
+    return HttpRequest(data, status=200)
 
-class PayPeriodDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = PayPeriod.objects.all()
-    serializer_class = PayPeriodSerializer
+def add(request):
+    try:
+        PayPeriod(
+            name=request.POST['name'],
+            start=request.POST['start'],
+            end=request.POST['end']).save()
+        data = {'message': 'cool'}
+        data = simplejson.dumps(data)
+    except:
+        data = {'message': 'Failure saving Pay Period'}
+        data = simplejson.dumps(data)
+        return HttpResponse(data, status=403)
+    return HttpResponse(data, status=201)
