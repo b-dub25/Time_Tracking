@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'pay_period',
     'tokenauth',
     'faculty_request',
+    'Inventory_Management',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

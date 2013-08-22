@@ -45,4 +45,25 @@ def work_event_list_for_pay_period(request, pay_period):
 def work_event_detail(request, pk):
     event = WorkEvent.objects.get(pk=pk)
     data = simplejson.dumps(event.to_dict())
-    return HttpResponse(data, mimetype='application/json') 
+    return HttpResponse(data, mimetype='application/json')
+    
+@csrf_exempt
+@require_http_methods(['POST'])
+def work_event_add(request):
+    workevent = WorkEvent(
+        user = request.user,
+        start_time = request.POST['start_time'],
+        end_time = request.POST['end_time'],
+        start_date = request.POST['start_date'],
+        comments = request.POST['comments'],
+        category = Category.objects.get(pk=request.POST['category']),
+        on_campus = request.POST['on_campus'],
+     )
+    try:
+        workevent.save()
+        data = {'data': 'Work Event Created'}
+        code = 201
+    except:
+        data = {'message': 'Work Event Creation Failed'}
+        code = 400
+    return HttpResponse(simplejson.dumps(data), status=code)
