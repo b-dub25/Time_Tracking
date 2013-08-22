@@ -67,3 +67,24 @@ def work_event_add(request):
         data = {'message': 'Work Event Creation Failed'}
         code = 400
     return HttpResponse(simplejson.dumps(data), status=code)
+
+@csrf_exempt
+@require_http_methods(['POST'])
+def work_event_update(request, pk):
+    workevent = WorkEvent.objects.get(pk=pk)
+    workevent.start_time = request.POST['start_time']
+    workevent.end_time = request.POST['end_time']
+    workevent.start_date = request.POST['start_date']
+    workevent.comments = request.POST['comments']
+    workevent.category = Category.objects.get(pk=request.POST['category'])
+    workevent.on_campus = request.POST['on_campus']
+
+    try:
+        workevent.save()
+        data = {'data': 'Work Event Updated'}
+        code = 200
+    except:
+        data = {'message': 'Work Event Update Failed'}
+        code = 400
+    return HttpResponse(simplejson.dumps(data), status=code)
+

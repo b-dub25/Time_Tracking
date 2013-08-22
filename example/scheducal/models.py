@@ -50,6 +50,7 @@ class WorkEvent(BaseEvent):
 
     def to_dict(self):
         return {
+            'id': self.pk,
             'user': self.user.id,
             'start_time': unicode(self.start_time),
             'end_time': unicode(self.end_time),
