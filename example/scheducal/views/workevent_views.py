@@ -91,3 +91,16 @@ def work_event_update(request, pk):
         code = 400
     return HttpResponse(simplejson.dumps(data), status=code)
 
+@csrf_exempt
+@require_http_methods(['POST'])
+def work_event_delete(request, pk):
+    workevent = WorkEvent.objects.get(pk=pk)
+
+    try:
+        workevent.delete()
+        data = {'data': 'Work Event Deleted'}
+        code = 200
+    except:
+        data = {'message': 'Work Event Deletion Failed'}
+        code = 400
+    return HttpResponse(simplejson.dumps(data), status=code)
