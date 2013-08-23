@@ -19,3 +19,8 @@ example/scheducal/templates
 
 # swap files
 *.swp
+
+# Linked Folders
+example/faculty_request
+example/Inventory_Management
+example/tokenauth
