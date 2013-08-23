@@ -3,7 +3,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
-from rest_framework.authtoken.models import Token
 from pay_period.models import PayPeriod
 
 class Category(models.Model):
@@ -41,7 +40,7 @@ class BaseEvent(models.Model):
 
 class WorkEvent(BaseEvent):
     category = models.ForeignKey(Category)
-    on_campus = models.BooleanField()
+    clocked_in = models.BooleanField()
 
     @property
     def pay_period(self):
@@ -57,14 +56,10 @@ class WorkEvent(BaseEvent):
             'comments': self.comments,
             'duration': unicode(self.duration),
             'category': self.category.id,
-            'on_campus': self.on_campus
+            'clocked_in': self.clocked_in,
         }
     
 # To be used when adding schedule functionality
 class ScheduleEvent(BaseEvent):
     end_date = models.TimeField()
 
-@receiver(post_save, sender=User)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
