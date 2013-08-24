@@ -9,4 +9,5 @@ urlpatterns = patterns('example.views',
     url(r'^$', 'api_root'),
     url(r'^auth/', include('tokenauth.urls')),
     url(r'^request/', include('faculty_request.urls')),
+    url(r'^inventory/', include('Inventory_Management.urls')),
 )

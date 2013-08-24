@@ -3,13 +3,15 @@ from pay_period.models import PayPeriod
 from django.utils import simplejson
 from django.core import serializers
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 
 def list(request):
     periods = [period.to_dict() for period in PayPeriod.objects.all()]
     data = {'message': '', 'pay_periods': periods}
     data = simplejson.dumps(data)
-    return HttpRequest(data, status=200)
+    return HttpResponse(data, status=200)
 
+@csrf_exempt
 def add(request):
     try:
         PayPeriod(

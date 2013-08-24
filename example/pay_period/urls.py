@@ -3,6 +3,6 @@ from pay_period import views
 
 
 urlpatterns = patterns('',
-    url(r'^list/$', views.period_list),
-    url(r'^add/$', views.period_add),
+    url(r'^list/$', views.list),
+    url(r'^add/$', views.add),
 )

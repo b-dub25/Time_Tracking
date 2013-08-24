@@ -1,0 +1,12 @@
+[
+  {
+   "model": "django.contrib.auth.models.User"
+   "pk": 1,
+   "fields": {
+     "username": " ",
+     "first_name": "",
+     "last_name": " "
+   }
+  }
+
+]
