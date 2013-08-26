@@ -17,6 +17,7 @@ class PayPeriod(models.Model):
 
     def to_dict(self):
         return {
+            'id': self.id,
             'name': self.name,
             'start': unicode(self.start),
             'end': unicode(self.end),
