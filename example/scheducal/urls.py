@@ -19,7 +19,7 @@ from scheducal.views.workevent_views import (
         work_event_list_for_pay_period,
     )
 from scheducal.views.reports.workevent_views import (
-        work_event_list_for_pay_period_report,
+        work_event_list_for_pay_period as work_event_list_for_pay_period_report,
     )
  
 urlpatterns = patterns('',
