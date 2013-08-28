@@ -40,7 +40,8 @@ def work_event_list_for_pay_period(request, pay_period):
                 'events': [x.to_dict() for x in user_events],
                 'total': str(total),
             })
-        except: pass
+        except:
+            return HttpResponse(status=500)
 
     data = simplejson.dumps(events)
     return HttpResponse(data, mimetype='application/json')
