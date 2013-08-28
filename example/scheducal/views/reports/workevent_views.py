@@ -27,7 +27,8 @@ def work_event_list_for_pay_period(request, pay_period):
     for user in User.objects.all():
         try:
             user_events = WorkEvent.objects \
-                          .filter(start_date__range=[pay_period.start, \
+                          .filter(user=user,
+                                  start_date__range=[pay_period.start, \
                                                      pay_period.end])            
             user_events = [event.to_dict() for event in user_events]
             events.append({
