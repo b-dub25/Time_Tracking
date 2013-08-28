@@ -16,6 +16,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 from django.core import serializers
+from scheducal.lib.user_helper import user_dict
 
 @require_http_methods(['GET'])
 def work_event_list_for_pay_period(request, pay_period):
@@ -30,7 +31,7 @@ def work_event_list_for_pay_period(request, pay_period):
                                                      pay_period.end])            
             user_events = [event.to_dict() for event in user_events]
             events.append({
-                'user': user,
+                'user': user_dict(user),
                 'events': user_events,
             })
         except: pass
