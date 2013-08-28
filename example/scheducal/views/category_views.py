@@ -17,13 +17,12 @@ def category_list(request):
 @csrf_exempt
 @require_http_methods(['POST'])
 def category_add(request):
-    request.POST['is_project'] = True if \
-                                 request.POST['is_project'] == 'true' \
-                                 else request.POST['is_project']
-    request.POST['is_project'] = False if \
-                                 request.POST['is_project'] == 'false' \
-                                 else request.POST['is_project']
-    form = CategoryForm(request.POST)
+    post = request.POST.copy()
+    if post['is_project'] == 'true':
+        post['is_project'] = True
+    if post['is_project'] == 'false':
+        post['is_project'] = False
+    form = CategoryForm(post)
     if form.is_valid():
         name = form.cleaned_data['name']
         is_project = request.POST['is_project']
