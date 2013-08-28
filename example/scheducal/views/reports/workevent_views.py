@@ -30,6 +30,7 @@ def work_event_list_for_pay_period(request, pay_period):
                           .filter(user=user,
                                   start_date__range=[pay_period.start, \
                                                      pay_period.end])            
+            print [x.duration for x in user_events]
             events.append({
                 'user': user_dict(user),
                 'events': [x.to_dict() for x in user_events],
