@@ -20,7 +20,7 @@ def category_add(request):
     post = request.POST.copy()
     if post['is_project'] == 'true':
         post['is_project'] = True
-    if post['is_project'] == 'false':
+    else:
         post['is_project'] = False
     print post
     form = CategoryForm(post)
