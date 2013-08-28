@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from pay_period.models import PayPeriod
 
 class Category(models.Model):
-    name = models.CharField(max_length=20,unique=True)
+    name = models.CharField(max_length=50,unique=True)
     is_project = models.BooleanField()
 
     def to_dict(self):

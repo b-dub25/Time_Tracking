@@ -3,17 +3,8 @@ from django.contrib.auth.models import User
 from django.utils import simplejson
 from django.core import serializers
 from django.views.decorators.http import require_http_methods
+from scheducal.lib.user_helper import user_dict
 
-def user_dict(user):
-    groups = [group.pk for group in user.groups.all()]
-    return {
-        'id': user.pk,
-        'username': user.username,
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'groups': groups or None,
-    }
-    
 @require_http_methods(['GET'])
 def user_list(request):
     users = User.objects.all()
