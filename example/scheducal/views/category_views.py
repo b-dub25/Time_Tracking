@@ -22,6 +22,7 @@ def category_add(request):
         post['is_project'] = True
     if post['is_project'] == 'false':
         post['is_project'] = False
+    print post
     form = CategoryForm(post)
     if form.is_valid():
         name = form.cleaned_data['name']
@@ -30,7 +31,7 @@ def category_add(request):
     
         # If object exists, duplicate. 
         if get_obj_or_none(Category, args):
-            return HttpResponse(status=400)
+            return HttpResponse(status=409)
 
         category = Category(name=name, is_project=is_project)
         try:
