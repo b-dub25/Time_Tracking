@@ -35,7 +35,7 @@ def work_event_list_for_pay_period(request, pay_period):
             events.append({
                 'user': user_dict(user),
                 'events': [x.to_dict() for x in user_events],
-                'duration': duration,
+                'total': duration,
             })
         except: pass
 
