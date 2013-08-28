@@ -17,6 +17,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 from django.core import serializers
 from scheducal.lib.user_helper import user_dict
+from datetime import timedelta
 
 @require_http_methods(['GET'])
 def work_event_list_for_pay_period(request, pay_period):
@@ -30,11 +31,14 @@ def work_event_list_for_pay_period(request, pay_period):
                           .filter(user=user,
                                   start_date__range=[pay_period.start, \
                                                      pay_period.end])            
-            print [x.duration for x in user_events]
+            total = timedelta()
+            for i in user_events:
+                total += i.duration
+            print total
             events.append({
                 'user': user_dict(user),
                 'events': [x.to_dict() for x in user_events],
-                'total': sum([x.duration for x in user_events]),
+                'total': str(total),
             })
         except: pass
 
