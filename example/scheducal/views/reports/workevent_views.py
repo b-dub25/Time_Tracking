@@ -32,15 +32,16 @@ def work_event_list_for_pay_period(request, pay_period):
                                   start_date__range=[pay_period.start, \
                                                      pay_period.end])            
             total = timedelta()
+            durations = [x.duration for x in user_events]
             for i in user_events:
-                total += i.duration
-            print total
+                total = total + i.duration
             events.append({
                 'user': user_dict(user),
                 'events': [x.to_dict() for x in user_events],
                 'total': str(total),
             })
-        except:
+        except Exception as e:
+            print e
             return HttpResponse(status=500)
 
     data = simplejson.dumps(events)
