@@ -30,10 +30,12 @@ def work_event_list_for_pay_period(request, pay_period):
                           .filter(user=user,
                                   start_date__range=[pay_period.start, \
                                                      pay_period.end])            
-            user_events = [event.to_dict() for event in user_events]
+            user_events = [event for event in user_events]
+            duration = sum([x.duration for x in user_events])
             events.append({
                 'user': user_dict(user),
-                'events': user_events,
+                'events': [x.to_dict() for x in user_events],
+                'duration': duration,
             })
         except: pass
 
