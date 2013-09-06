@@ -48,7 +48,7 @@ class WorkEvent(BaseEvent):
                          .filter(end__gte=self.start_date)[0]
 
     def save(self, *args, **kwargs):
-        ci = kwargs['clocked_in']
+        clocked_in = kwargs['clocked_in']
         if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
             kwargs['clocked_in'] = True
         else:
