@@ -93,6 +93,11 @@ def work_event_add(request):
 @csrf_exempt
 @require_http_methods(['POST'])
 def work_event_update(request, pk):
+    clocked_in = kwargs['clocked_in']
+    if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
+        clocked_in = True
+    else:
+        clocked_in = False
     workevent = WorkEvent.objects.get(pk=pk)
     workevent.start_time = request.POST['start_time']
     workevent.end_time = request.POST['end_time']
