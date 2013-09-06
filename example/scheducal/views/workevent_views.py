@@ -55,6 +55,11 @@ def work_event_detail(request, pk):
 @csrf_exempt
 @require_http_methods(['POST'])
 def work_event_create(request):
+    clocked_in = request.POST['clocked_in']
+    if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
+        clocked_in = True
+    else:
+        clocked_in = False
     data = simplejson.dumps({'message': ''})
     try:
         work_event = WorkEvent(#**request.POST)
@@ -64,32 +69,11 @@ def work_event_create(request):
                         start_date=request.POST['start_date'],
                         comments=request.POST['comments'],
                         categoty=request.POST['category'],
-                        clocked_in=request.POST['clocked_in'])
+                        clocked_in=clocked_in)
     except:
         return HttpResponse(data, status=400)
     return HttpResponse(data, status=201, mimetype='application/json')
     
-@csrf_exempt
-@require_http_methods(['POST'])
-def work_event_add(request):
-    workevent = WorkEvent(
-        user = request.user,
-        start_time = request.POST['start_time'],
-        end_time = request.POST['end_time'],
-        start_date = request.POST['start_date'],
-        comments = request.POST['comments'],
-        category = Category.objects.get(pk=request.POST['category']),
-        clocked_in = request.POST['clocked_in'],
-     )
-    try:
-        workevent.save()
-        data = {'data': 'Work Event Created'}
-        code = 201
-    except:
-        data = {'message': 'Work Event Creation Failed'}
-        code = 400
-    return HttpResponse(simplejson.dumps(data), status=code)
-
 @csrf_exempt
 @require_http_methods(['POST'])
 def work_event_update(request, pk):
