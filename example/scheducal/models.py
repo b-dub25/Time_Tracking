@@ -48,12 +48,13 @@ class WorkEvent(BaseEvent):
                          .filter(end__gte=self.start_date)[0]
 
     def save(self, *args, **kwargs):
-        clocked_in = kwargs['clocked_in']
+        kwargs_n = kwargs
+        clocked_in = kwargs_n['clocked_in']
         if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
-            kwargs['clocked_in'] = True
+            kwargs_n['clocked_in'] = True
         else:
-            kwargs['clocked_in'] = False
-        super(WorkEvent, self).save(*args, **kwargs)
+            kwargs_n['clocked_in'] = False
+        super(WorkEvent, self).save(*args, **kwargs_n)
         
     def to_dict(self):
         return {
