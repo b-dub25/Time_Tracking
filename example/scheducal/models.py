@@ -47,6 +47,14 @@ class WorkEvent(BaseEvent):
         return PayPeriod.objects.filter(start__lte=self.start_date) \
                          .filter(end__gte=self.start_date)[0]
 
+    def save(self, *args, **kwargs):
+        ci = kwargs['clocked_in']
+        if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
+            kwargs['clocked_in'] = True
+        else:
+            kwargs['clocked_in'] = False
+        super(WorkEvent, self).save(*args, **kwargs)
+        
     def to_dict(self):
         return {
             'id': self.pk,
