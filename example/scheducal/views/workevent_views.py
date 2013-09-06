@@ -79,7 +79,7 @@ def work_event_add(request):
         start_date = request.POST['start_date'],
         comments = request.POST['comments'],
         category = Category.objects.get(pk=request.POST['category']),
-        on_campus = request.POST['on_campus'],
+        clocked_in = request.POST['clocked_in'],
      )
     try:
         workevent.save()
@@ -99,7 +99,7 @@ def work_event_update(request, pk):
     workevent.start_date = request.POST['start_date']
     workevent.comments = request.POST['comments']
     workevent.category = Category.objects.get(pk=request.POST['category'])
-    workevent.on_campus = request.POST['on_campus']
+    workevent.clocked_in = request.POST['clocked_in']
 
     try:
         workevent.save()

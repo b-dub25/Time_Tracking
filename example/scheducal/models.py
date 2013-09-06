@@ -51,8 +51,8 @@ class WorkEvent(BaseEvent):
         return {
             'id': self.pk,
             'user': self.user.pk,
-            'start_time': unicode(self.start_time),
-            'end_time': unicode(self.end_time),
+            'start_time': unicode(self.start_time.strftime('%I:%m %p')),
+            'end_time': unicode(self.end_time.strftime('%I:%m %p')),
             'start_date': unicode(self.start_date),
             'comments': self.comments,
             'duration': unicode(self.duration),

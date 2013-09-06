@@ -5,4 +5,4 @@ class WorkEventForm(forms.Form):
     end_time = forms.TimeField(required=True)
     start_date = forms.DateField(required=True)
     comments = forms.TextField()
-    on_campus = forms.BooleanField(required=True)
+    clocked_in = forms.BooleanField(required=True)
