@@ -105,7 +105,8 @@ def work_event_update(request, pk):
         workevent.save()
         data = {'data': 'Work Event Updated'}
         code = 200
-    except:
+    except Exception as e:
+        print e
         data = {'message': 'Work Event Update Failed'}
         code = 400
     return HttpResponse(simplejson.dumps(data), status=code)
