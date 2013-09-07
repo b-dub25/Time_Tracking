@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     # Category views
     url(r'^category/$', category_list),
     url(r'^category/(?P<pk>[0-9]+)/$', category_detail),
-    url(r'^category/add/$', category_add),
+    url(r'^category/add/$', category_create),
 
     # Work Event views
     url(r'^workevent/$', work_event_list),
