@@ -16,6 +16,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 from django.core import serializers
+from datetime import datetime
 
 @require_http_methods(['GET'])
 def work_event_list(request):
@@ -68,8 +69,8 @@ def work_event_create(request):
     try:
         work_event = WorkEvent(#**request.POST)
                         user=request.user,
-                        start=request.POST['start'],
-                        end=request.POST['end'],
+                        start=datetime(request.POST['start']),
+                        end=datetime(request.POST['end']),
                         comments=request.POST['comments'],
                         category=category,
                         clocked_in=clocked_in)
