@@ -32,13 +32,13 @@ urlpatterns = patterns('',
     # Category views
     url(r'^category/$', category_list),
     url(r'^category/(?P<pk>[0-9]+)/$', category_detail),
-    url(r'^category/add/$', category_create),
+    url(r'^category/add/$', category_add),
 
     # Work Event views
     url(r'^workevent/$', work_event_list),
     url(r'^workevent/(?P<pk>[0-9]+)/$', work_event_detail),
     url(r'^workevent/payperiod/(?P<pay_period>[0-9]+)/$', work_event_list_for_pay_period),
-    url(r'^workevent/create/$', work_event_create),
+    url(r'^workevent/add/$', work_event_create),
     url(r'^workevent/update/(?P<pk>[0-9]+)/$', work_event_update),
     url(r'^workevent/delete/(?P<pk>[0-9]+)/$', work_event_delete),
 
