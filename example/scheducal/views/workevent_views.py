@@ -67,9 +67,8 @@ def work_event_create(request):
     try:
         work_event = WorkEvent(#**request.POST)
                         user=request.user,
-                        start_time=request.POST['start_time'],
-                        end_time=request.POST['end_time'],
-                        start_date=request.POST['start_date'],
+                        start=request.POST['start'],
+                        end=request.POST['end'],
                         comments=request.POST['comments'],
                         categoty=request.POST['category'],
                         clocked_in=clocked_in)
@@ -86,9 +85,8 @@ def work_event_update(request, pk):
     else:
         clocked_in = False
     workevent = WorkEvent.objects.get(pk=pk)
-    workevent.start_time = request.POST['start_time']
-    workevent.end_time = request.POST['end_time']
-    workevent.start_date = request.POST['start_date']
+    workevent.start= request.POST['start']
+    workevent.end= request.POST['end']
     workevent.comments = request.POST['comments']
     workevent.category = Category.objects.get(pk=request.POST['category'])
     workevent.clocked_in = clocked_in
