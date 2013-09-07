@@ -17,7 +17,6 @@ from scheducal.views.workevent_views import (
         work_event_detail,
         work_event_create,
         work_event_list_for_pay_period,
-        work_event_add,
         work_event_update,
         work_event_delete,
     )
