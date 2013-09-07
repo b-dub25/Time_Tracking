@@ -63,6 +63,7 @@ def work_event_create(request):
         clocked_in = True
     else:
         clocked_in = False
+    category = Category.objects.get(pk=request.POST['category'])
     data = simplejson.dumps({'message': ''})
     try:
         work_event = WorkEvent(#**request.POST)
@@ -70,7 +71,7 @@ def work_event_create(request):
                         start=request.POST['start'],
                         end=request.POST['end'],
                         comments=request.POST['comments'],
-                        category=request.POST['category'],
+                        category=category,
                         clocked_in=clocked_in)
     except Exception as e:
         print e
