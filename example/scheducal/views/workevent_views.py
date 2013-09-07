@@ -38,7 +38,7 @@ def work_event_list_for_pay_period(request, pay_period):
     if not pay_period:
         raise ObjectDoesNotExist 
     try:
-        events = WorkEvent.objects.filter(user=user,start_date__range=[pay_period.start, pay_period.end])
+        events = WorkEvent.objects.filter(user=user,start.date()=[pay_period.start, pay_period.end])
     except:
         raise PermissionDenied
 
