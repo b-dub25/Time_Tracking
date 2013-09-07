@@ -70,7 +70,7 @@ def work_event_create(request):
                         start=request.POST['start'],
                         end=request.POST['end'],
                         comments=request.POST['comments'],
-                        categoty=request.POST['category'],
+                        category=request.POST['category'],
                         clocked_in=clocked_in)
     except Exception as e:
         print e
