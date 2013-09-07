@@ -39,7 +39,8 @@ def work_event_list_for_pay_period(request, pay_period):
         raise ObjectDoesNotExist 
     try:
         events = WorkEvent.objects.filter(user=user,start__range=[pay_period.start, pay_period.end])
-    except:
+    except Exception as e:
+        print e
         data = {'message': 'Error filtering by pay period'}
         return HttpResponse(data, status=500)
 
