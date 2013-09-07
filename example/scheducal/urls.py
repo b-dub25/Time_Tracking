@@ -40,7 +40,6 @@ urlpatterns = patterns('',
     url(r'^workevent/(?P<pk>[0-9]+)/$', work_event_detail),
     url(r'^workevent/payperiod/(?P<pay_period>[0-9]+)/$', work_event_list_for_pay_period),
     url(r'^workevent/create/$', work_event_create),
-    url(r'^workevent/add', work_event_add),
     url(r'^workevent/update/(?P<pk>[0-9]+)/$', work_event_update),
     url(r'^workevent/delete/(?P<pk>[0-9]+)/$', work_event_delete),
 

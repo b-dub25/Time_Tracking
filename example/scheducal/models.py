@@ -21,15 +21,14 @@ class Category(models.Model):
 
 class BaseEvent(models.Model):
     user = models.ForeignKey(User)
-    start_time = models.TimeField()
-    end_time = models.TimeField()
-    start_date = models.DateField()
+    start = models.TimeField()
+    end = models.TimeField()
     comments = models.TextField(blank=True, null=True)
 
     @property
     def duration(self):
-        stime = timedelta(hours=self.start_time.hour,minutes=self.start_time.minute)
-        etime = timedelta(hours=self.end_time.hour,minutes=self.end_time.minute)
+        stime = timedelta(hours=self.start.time().hour,minutes=self.start.time().minute)
+        etime = timedelta(hours=self.end.time().hour,minutes=self.end.time().minute)
         return etime-stime
     
     def __unicode__(self):
@@ -51,9 +50,8 @@ class WorkEvent(BaseEvent):
         return {
             'id': self.pk,
             'user': self.user.pk,
-            'start_time': unicode(self.start_time.strftime('%I:%m %p')),
-            'end_time': unicode(self.end_time.strftime('%I:%m %p')),
-            'start_date': unicode(self.start_date),
+            'start': unicode(self.start_time.strftime('%I:%m %p')),
+            'end': unicode(self.end_time.strftime('%I:%m %p')),
             'comments': self.comments,
             'duration': unicode(self.duration),
             'category': self.category.id,
