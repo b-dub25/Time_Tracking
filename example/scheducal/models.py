@@ -27,9 +27,7 @@ class BaseEvent(models.Model):
 
     @property
     def duration(self):
-        stime = timedelta(hours=self.start.time().hour,minutes=self.start.time().minute)
-        etime = timedelta(hours=self.end.time().hour,minutes=self.end.time().minute)
-        return etime-stime
+        return self.end - self.start
     
     def __unicode__(self):
         return unicode(self.category)	
@@ -50,8 +48,8 @@ class WorkEvent(BaseEvent):
         return {
             'id': self.pk,
             'user': self.user.pk,
-            'start': unicode(self.start.strftime('%I:%m %p')),
-            'end': unicode(self.end.strftime('%I:%m %p')),
+            'start': unicode(self.start.strftime('%I:%M %p')),
+            'end': unicode(self.end.strftime('%I:%M %p')),
             'start_date': unicode(self.start.date()),
             'comments': self.comments,
             'duration': unicode(self.duration),
