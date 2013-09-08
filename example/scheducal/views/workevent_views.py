@@ -89,8 +89,8 @@ def work_event_update(request, pk):
     else:
         clocked_in = False
     workevent = WorkEvent.objects.get(pk=pk)
-    workevent.start= request.POST['t_start']
-    workevent.end= request.POST['t_end']
+    workevent.start= request.POST['t_start'].replace('/', '-')
+    workevent.end= request.POST['t_end'].replace('/', '-')
     workevent.comments = request.POST['comments']
     workevent.category = Category.objects.get(pk=request.POST['category'])
     workevent.clocked_in = clocked_in
