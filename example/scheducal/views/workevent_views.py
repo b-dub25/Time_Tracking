@@ -74,6 +74,7 @@ def work_event_create(request):
                         comments=request.POST['comments'],
                         category=category,
                         clocked_in=clocked_in)
+        work_event.save()
     except Exception as e:
         print e
         return HttpResponse(data, status=400)
