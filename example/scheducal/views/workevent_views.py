@@ -66,6 +66,7 @@ def work_event_create(request):
         clocked_in = False
     category = Category.objects.get(pk=request.POST['category'])
     data = simplejson.dumps({'message': ''})
+    print request.POST
     try:
         work_event = WorkEvent(#**request.POST)
                         user=request.user,
