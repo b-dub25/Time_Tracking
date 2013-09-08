@@ -16,7 +16,6 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 from django.core import serializers
-import datetime
 
 @require_http_methods(['GET'])
 def work_event_list(request):
@@ -59,8 +58,6 @@ def work_event_detail(request, pk):
 @csrf_exempt
 @require_http_methods(['POST'])
 def work_event_create(request):
-    start = datetime.datetime.strptime(request.POST['t_start'], "%Y/%m/%d %H:%M:%S")
-    end = datetime.datetime.strptime(request.POST['t_end'], "%Y/%m/%d %H:%M:%S")
     clocked_in = request.POST['clocked_in']
     if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
         clocked_in = True
@@ -72,8 +69,8 @@ def work_event_create(request):
     try:
         work_event = WorkEvent(#**request.POST)
                         user=request.user,
-                        start=start,
-                        end=end,
+                        start=request.POST['t_start'].replace('/', '-'),
+                        end=request.POST['t_end'].replace('/', '-'),
                         comments=request.POST['comments'],
                         category=category,
                         clocked_in=clocked_in)
