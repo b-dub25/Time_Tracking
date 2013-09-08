@@ -59,6 +59,8 @@ def work_event_detail(request, pk):
 @csrf_exempt
 @require_http_methods(['POST'])
 def work_event_create(request):
+    start = datetime.datetime.strptime(request.POST['t_start'], "%Y-%m-%d %H:%M")
+    end = datetime.datetime.strptime(request.POST['t_end'], "%Y-%m-%d %H:%M")
     clocked_in = request.POST['clocked_in']
     if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
         clocked_in = True
@@ -70,8 +72,8 @@ def work_event_create(request):
     try:
         work_event = WorkEvent(#**request.POST)
                         user=request.user,
-                        start=request.POST['t_start'].replace('/', '-'),
-                        end=request.POST['t_end'].replace('/', '-'),
+                        start=start,
+                        end=end,
                         comments=request.POST['comments'],
                         category=category,
                         clocked_in=clocked_in)
