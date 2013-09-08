@@ -29,7 +29,7 @@ def work_event_list_for_pay_period(request, pay_period):
         try:
             user_events = WorkEvent.objects \
                           .filter(user=user,
-                                  start_date__range=[pay_period.start, \
+                                  start__range=[pay_period.start, \
                                                      pay_period.end])            
             total = timedelta()
             durations = [x.duration for x in user_events]
