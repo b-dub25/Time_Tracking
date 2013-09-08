@@ -69,8 +69,8 @@ def work_event_create(request):
     try:
         work_event = WorkEvent(#**request.POST)
                         user=request.user,
-                        start=datetime(request.POST['t_start']),
-                        end=datetime(request.POST['t_end']),
+                        start=request.POST['t_start'],
+                        end=request.POST['t_end'],
                         comments=request.POST['comments'],
                         category=category,
                         clocked_in=clocked_in)
