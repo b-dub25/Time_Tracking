@@ -59,8 +59,8 @@ def work_event_detail(request, pk):
 @csrf_exempt
 @require_http_methods(['POST'])
 def work_event_create(request):
-    start = datetime.datetime.strptime(request.POST['t_start'], "%Y-%m-%d %H:%M")
-    end = datetime.datetime.strptime(request.POST['t_end'], "%Y-%m-%d %H:%M")
+    start = datetime.datetime.strptime(request.POST['t_start'], "%Y/%m/%d %H:%M:%S")
+    end = datetime.datetime.strptime(request.POST['t_end'], "%Y/%m/%d %H:%M:%S")
     clocked_in = request.POST['clocked_in']
     if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
         clocked_in = True
