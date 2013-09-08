@@ -21,8 +21,8 @@ class Category(models.Model):
 
 class BaseEvent(models.Model):
     user = models.ForeignKey(User)
-    start = models.TimeField()
-    end = models.TimeField()
+    start = models.DateTimeField()
+    end = models.DateTimeField()
     comments = models.TextField(blank=True, null=True)
 
     @property
