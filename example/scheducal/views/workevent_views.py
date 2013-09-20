@@ -32,18 +32,19 @@ def work_event_list(request):
 @require_http_methods(['GET'])
 def work_event_list_for_pay_period(request, pay_period):
     pay_period = PayPeriod.objects.get(pk=pay_period) 
+    new_end = datetime.combine(pay_period.end, time(23, 59, 59, 999999))
     user = request.user
     if not user:
         raise PermissionDenied
     if not pay_period:
         raise ObjectDoesNotExist 
     try:
-        events = WorkEvent.objects.filter(user=user,start__range=[pay_period.start, pay_period.end])
+        events = WorkEvent.objects.filter(user=user,start__range=[pay_period.start, new_end])
     except Exception as e:
         print e
         events = []
-        #data = {'message': 'Error filtering by pay period'}
-        #return HttpResponse(data, status=500)
+        data = {'message': 'Error filtering by pay period'}
+        return HttpResponse(data, status=500)
 
     data = [event.to_dict() for event in events]
     data = simplejson.dumps(data)
