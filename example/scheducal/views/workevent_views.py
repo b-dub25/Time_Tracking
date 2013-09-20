@@ -34,7 +34,7 @@ def work_event_list(request):
 @require_http_methods(['GET'])
 def work_event_list_for_pay_period(request, pay_period):
     pay_period = PayPeriod.objects.get(pk=pay_period) 
-    new_end = datetime.datetime.combine(pay_period.end, time(23, 59, 59, 999999))
+    new_end = pay_period.end + datetime.timedelta(days=1)
     user = request.user
     if not user:
         raise PermissionDenied
