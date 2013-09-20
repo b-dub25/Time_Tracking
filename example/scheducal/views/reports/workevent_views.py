@@ -34,7 +34,7 @@ def work_event_list_for_pay_period(request, pay_period):
             user_events = WorkEvent.objects \
                           .filter(user=user) \
                           .filter(start__gte=start) \
-                          .filter(start_lte=end)            
+                          .filter(start__lte=end)            
             total = datetime.timedelta()
             durations = [x.duration for x in user_events]
             for i in user_events:
