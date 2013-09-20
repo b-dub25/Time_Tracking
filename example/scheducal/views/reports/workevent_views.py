@@ -22,7 +22,7 @@ import time
 
 @require_http_methods(['GET'])
 def work_event_list_for_pay_period(request, pay_period):
-    pay_period = PayPeriod.objects.get(pk=pay_period) 
+    p = PayPeriod.objects.get(pk=pay_period) 
     if not pay_period:
         raise ObjectDoesNotExist 
     events = []
