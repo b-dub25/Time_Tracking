@@ -18,6 +18,7 @@ from django.utils import simplejson
 from django.core import serializers
 from scheducal.lib.user_helper import user_dict
 import datetime
+import time
 
 @require_http_methods(['GET'])
 def work_event_list_for_pay_period(request, pay_period):
@@ -27,7 +28,7 @@ def work_event_list_for_pay_period(request, pay_period):
     events = []
     for user in User.objects.all():
         try:
-            new_end = datetime.combine(pay_period.end, time(23, 59, 59, 999999))
+            new_end = datetime.datetime.combine(pay_period.end, time(23, 59, 59, 999999))
             user_events = WorkEvent.objects \
                           .filter(user=user,
                                   start__range=[pay_period.start, \
