@@ -40,8 +40,8 @@ def work_event_list_for_pay_period(request, pay_period):
     if not pay_period:
         raise ObjectDoesNotExist 
     try:
-        start = pay_period.start + timedelta(hours=23, minutes=59)
-        end = pay_period.end + timedelta(hours=23, minutes=59)
+        start = pay_period.start + datetime.timedelta(hours=23, minutes=59)
+        end = pay_period.end + datetime.timedelta(hours=23, minutes=59)
         print 'SOHDGLKSDFLKHSDLGHWLSEIHDGVOIWSERHDGVWOIGLH'
         print start
         print end
