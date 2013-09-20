@@ -40,6 +40,7 @@ def work_event_list_for_pay_period(request, pay_period):
     if not pay_period:
         raise ObjectDoesNotExist 
     try:
+        print pay_period.end
         events = WorkEvent.objects.filter(user=user) \
                                   .filter(start__gte=pay_period.start) \
                                   .filter(start__lte=pay_period.end)
