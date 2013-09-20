@@ -42,7 +42,7 @@ def work_event_list_for_pay_period(request, pay_period):
     try:
         events = WorkEvent.objects.filter(user=user,
                                           start__gte=pay_period.start, 
-                                          end__lte=pay_period.end)
+                                          start__lte=pay_period.end)
     except Exception as e:
         print e
         events = []
