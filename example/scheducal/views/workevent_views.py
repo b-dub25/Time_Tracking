@@ -40,9 +40,11 @@ def work_event_list_for_pay_period(request, pay_period):
     if not pay_period:
         raise ObjectDoesNotExist 
     try:
-        print 'CRAIG IS A GIANT FAGGOT'
-        print pay_period.end
-        print type(pay_period.end)
+        start = pay_period.start + timedelta(hours=23, minutes=59)
+        end = pay_period.end + timedelta(hours=23, minutes=59)
+        print 'SOHDGLKSDFLKHSDLGHWLSEIHDGVOIWSERHDGVWOIGLH'
+        print start
+        print end
         events = WorkEvent.objects.filter(user=user) \
                                   .filter(start__gte=pay_period.start) \
                                   .filter(start__lte=pay_period.end)
