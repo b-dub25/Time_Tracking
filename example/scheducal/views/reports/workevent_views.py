@@ -28,7 +28,8 @@ def work_event_list_for_pay_period(request, pay_period):
     events = []
     for user in User.objects.all():
         try:
-            new_end = pay_period.end + datetime.timedelta(days=1)
+            new_end = pay_period.end + datetime.timedelta(days=1) \
+                      - datetime.timedelta(minutes=1)
             user_events = WorkEvent.objects \
                           .filter(user=user,
                                   start__range=[pay_period.start, \
