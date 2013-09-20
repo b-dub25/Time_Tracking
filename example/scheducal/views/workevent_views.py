@@ -33,21 +33,19 @@ def work_event_list(request):
 
 @require_http_methods(['GET'])
 def work_event_list_for_pay_period(request, pay_period):
-    pay_period = PayPeriod.objects.get(pk=pay_period) 
+    p = PayPeriod.objects.get(pk=pay_period) 
     user = request.user
     if not user:
         raise PermissionDenied
     if not pay_period:
         raise ObjectDoesNotExist 
     try:
-        start = pay_period.start + datetime.timedelta(hours=23, minutes=59)
-        end = pay_period.end + datetime.timedelta(hours=23, minutes=59)
-        print 'SOHDGLKSDFLKHSDLGHWLSEIHDGVOIWSERHDGVWOIGLH'
-        print start
-        print end
+        start = p.start
+        end = datetime.datetime(year=p.end.year, month=p.end.month, day=p.end.day,
+                                hour=23, minute=59)
         events = WorkEvent.objects.filter(user=user) \
-                                  .filter(start__gte=pay_period.start) \
-                                  .filter(start__lte=pay_period.end)
+                                  .filter(start__gte=start) \
+                                  .filter(start__lte=end)
     except Exception as e:
         print e
         events = []

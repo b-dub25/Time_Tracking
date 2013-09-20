@@ -28,10 +28,13 @@ def work_event_list_for_pay_period(request, pay_period):
     events = []
     for user in User.objects.all():
         try:
+            start = p.start
+            end = datetime.datetime(year=p.end.year, month=p.end.month, day=p.end.day,
+                                    hour=23, minute=59)
             user_events = WorkEvent.objects \
                           .filter(user=user) \
-                          .filter(start__gte=pay_period.start) \
-                          .filter(start_lte=pay_period.end)            
+                          .filter(start__gte=start) \
+                          .filter(start_lte=end)            
             total = datetime.timedelta()
             durations = [x.duration for x in user_events]
             for i in user_events:
