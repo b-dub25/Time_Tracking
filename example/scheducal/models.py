@@ -48,8 +48,8 @@ class WorkEvent(BaseEvent):
         return {
             'id': self.pk,
             'user': self.user.pk,
-            'start': unicode(self.start.strftime('%I:%M %p')),
-            'end': unicode(self.end.strftime('%I:%M %p')),
+            'start': unicode(self.start.strftime('%I:%M %p')).strip('+00:00'),
+            'end': unicode(self.end.strftime('%I:%M %p')).strip('+00:00'),
             'start_dt': unicode(self.start),
             'end_dt': unicode(self.end),
             'start_date': unicode(self.start.date()),
