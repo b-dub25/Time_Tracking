@@ -8,6 +8,7 @@ def user_dict(user):
         'groups': groups or None,
         'email': user.email,
     }
+@require_http_methods(['POST'])
 def modify_user(user):
 	if User().objects.get(all).filter(user.POST['pk']).exists():
 		updated_user = User().objects.get(all).filter(user.POST['pk'])
