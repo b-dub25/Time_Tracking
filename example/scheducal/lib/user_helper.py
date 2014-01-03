@@ -8,3 +8,16 @@ def user_dict(user):
         'groups': groups or None,
         'email': user.email,
     }
+def modify_user(user):
+	if User().objects.get(all).filter(user.POST['pk']).exists():
+		updated_user = User().objects.get(all).filter(user.POST['pk'])
+		updated_user.user_name  = user.POST['user_name']
+	    updated_user.first_name = user.POST['first_name']
+	    updated_user.last_name  = user.POST['last_name']
+	    updated_user.group      = user.POST['group']
+    else:
+	    new_user = User()
+        new_user.user_name = user.POST['user_name']
+        new_user.first_name = user.POST['first_name']
+        new_user.last_name = user.POST['last_name']
+        new_user.group = user.POST['group'] 
