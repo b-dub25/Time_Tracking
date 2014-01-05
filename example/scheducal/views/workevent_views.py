@@ -42,7 +42,7 @@ def work_event_list_for_pay_period(request, pay_period):
     try:
         start = p.start
         end = datetime.datetime(year=p.end.year, month=p.end.month, day=p.end.day,
-                                hour=23, minute=59)
+                                hour=23, minute=59,seconds=00)
         events = WorkEvent.objects.filter(user=user) \
                                   .filter(start__gte=start) \
                                   .filter(start__lte=end)
