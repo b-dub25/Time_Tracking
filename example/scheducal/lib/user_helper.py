@@ -22,4 +22,10 @@ def modify_user(user):
         new_user.first_name = user.POST['first_name']
         new_user.last_name = user.POST['last_name']
         new_user.group = user.POST['group'] 
-        
+
+@csrf_exempt
+@require_http_methods(['POST'])        
+def check_clocked_in(request):
+	clocked_in = request.POST['clocked_in']
+	return clocked_in == "True" || clocked_in == "true" 
+	       || clocked_in == true

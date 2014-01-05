@@ -16,6 +16,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import simplejson
 from django.core import serializers
+from scheducal.lib.user_helper import check_clocked_in
 import datetime
 import time
 
@@ -91,11 +92,12 @@ def work_event_create(request):
 @csrf_exempt
 @require_http_methods(['POST'])
 def work_event_update(request, pk):
-    clocked_in = request.POST['clocked_in']
+    """clocked_in = request.POST['clocked_in']
     if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
         clocked_in = True
     else:
-        clocked_in = False
+        clocked_in = False"""
+    clocked_in = check_clocked_in(request)
     workevent = WorkEvent.objects.get(pk=pk)
     workevent.start= request.POST['t_start'].replace('/', '-')
     workevent.end= request.POST['t_end'].replace('/', '-')
