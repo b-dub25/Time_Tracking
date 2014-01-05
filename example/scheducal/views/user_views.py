@@ -43,15 +43,28 @@ def create_user(user):
        status_code = "401"
     return HttpResponse(status_code)
 
+@require_http_methods(['POST'])
 def update_user(user):
-	status_code = ""
+	status_code = "" # default to null string
 	updated_user = User().objects(all).filter(user.POST['pk'])
-	try
-	   updated_user.user_name  = user.POST['user_name']
-	   updated_user.first_name = user.POST['first_name']
-	   updated_user.last_name  = user.POST['last_name']
-	   updated_user.group      = user.POST['group']
+	try:
+	   """updated_user.user_name  = user.POST['user_name']
+	     updated_user.first_name = user.POST['first_name']
+	     updated_user.last_name  = user.POST['last_name']
+	     updated_user.group      = user.POST['group']"""
+	     modify_user(user)
 	   status_code = "201"
-	except
-	   status_code = "401" 
+	except:
+	    status_code = "401" 
 	return HttpResponse(status_code)
+# One function to rule them all
+@require_http_methods(['POST'])
+def update_or_create_user(user):
+	status_code = ""
+	try:
+		modify_user(user)
+		status_code = "201" # it was a good call
+	except:
+		status_code = "401" # something bad happened   
+	return HttpResponse(status_code)
+

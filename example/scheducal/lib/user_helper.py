@@ -22,3 +22,4 @@ def modify_user(user):
         new_user.first_name = user.POST['first_name']
         new_user.last_name = user.POST['last_name']
         new_user.group = user.POST['group'] 
+        
