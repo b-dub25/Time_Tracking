@@ -42,9 +42,9 @@ def work_event_list_for_pay_period(request, pay_period):
         raise ObjectDoesNotExist 
     try:
         start = p.start
-        start.seconds = 00
+        start.second = 00
         end = datetime.datetime(year=p.end.year, month=p.end.month, day=p.end.day,
-                                hour=23, minute=59,seconds=00)
+                                hour=23, minute=59,second=00)
         events = WorkEvent.objects.filter(user=user) \
                                   .filter(start__gte=start) \
                                   .filter(start__lte=end)
@@ -67,11 +67,12 @@ def work_event_detail(request, pk):
 @csrf_exempt
 @require_http_methods(['POST'])
 def work_event_create(request):
-    clocked_in = request.POST['clocked_in']
-    if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
+    clocked_in = check_clocked_in(request)
+    """if clocked_in == 'True' or clocked_in == 'true' or clocked_in == True:
         clocked_in = True
     else:
         clocked_in = False
+        """
     category = Category.objects.get(pk=request.POST['category'])
     data = simplejson.dumps({'message': ''})
     print request.POST
